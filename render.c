@@ -1,12 +1,14 @@
 /* The software renderer for the engine */
 
-#include "engine_libc/eng_stdbool.h"  //#include <stdbool.h>
-#include "platform/render_target.h"
-#include "engine_core/eng_render.h"
-#include "util/debug_text.h"
+#include <stdbool.h>
+
+#include "render_target.h"  // TODO sort this interface
+
+#include "render.h"
+#include "debug_font.h"
 
 
-static void set_pixel (uint8_t *pixel, ENG_Color color)
+static void set_pixel (uint8_t *pixel, vat7_Color color)
 {
 	pixel[0] = color.blue;
 	pixel[1] = color.green;
@@ -15,8 +17,8 @@ static void set_pixel (uint8_t *pixel, ENG_Color color)
 }
 
 
-static void render_debug_glyph (ENG_RenderTarget rt, char ascii,
-	size_t x, size_t y, size_t scale, ENG_Color color, ENG_Color bg_color)
+static void render_debug_glyph (vat7_RenderTarget rt, char ascii,
+	size_t x, size_t y, size_t scale, vat7_Color color, vat7_Color bg_color)
 {
 	(void)color;
 	(void)bg_color;
@@ -52,8 +54,8 @@ static void render_debug_glyph (ENG_RenderTarget rt, char ascii,
 }
 
 
-static void render_debug_text (ENG_RenderTarget rt, char *str, size_t x,
-	size_t y, size_t scale, ENG_Color color, ENG_Color bg_color)
+static void render_debug_text (vat7_RenderTarget rt, char *str, size_t x,
+	size_t y, size_t scale, vat7_Color color, vat7_Color bg_color)
 {
 	size_t line = 0u;
 	size_t column = 0u;
@@ -82,7 +84,7 @@ static void render_debug_text (ENG_RenderTarget rt, char *str, size_t x,
 }
 
 
-static void fill_screen (ENG_RenderTarget rt, ENG_Color color)
+static void fill_screen (vat7_RenderTarget rt, vat7_Color color)
 {
 	for (size_t i = 0u; i < rt.width * rt.height; i++)
 	{
@@ -91,11 +93,11 @@ static void fill_screen (ENG_RenderTarget rt, ENG_Color color)
 }
 
 
-void ENG_render (ENG_RenderTarget rt, ENG_RenderCommandBuffer *rcb)
+void vat7_render (vat7_RenderTarget rt, vat7_RenderCommandBuffer *rcb)
 {
 	if (rt.pixel_buffer == NULL) return;
 	fill_screen(rt, rcb->bg_color);
-	if (rcb->commands[0].type == ENG_RENDER_TYPE_DEBUG_TEXT)
+	if (rcb->commands[0].type == vat7_RENDER_TYPE_DEBUG_TEXT)
 	{
 		render_debug_text (rt, rcb->commands[0].text,
 			(size_t)rcb->commands[0].x,
