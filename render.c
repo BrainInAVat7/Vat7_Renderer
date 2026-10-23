@@ -2,7 +2,7 @@
 
 #include <stdbool.h>
 
-#include "render_target.h"  // TODO sort this interface
+#include "../window_io/include/vat7_render_target.h"
 
 #include "render.h"
 #include "debug_font.h"

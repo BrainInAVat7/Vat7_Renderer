@@ -41,8 +41,12 @@ typedef struct
 /* RenderCommand type constants */
 // NOTE: 0 reserved in case I want error signaling or something
 static const uint8_t vat7_RENDER_TYPE_DEBUG_TEXT = 1u;
-static const uint8_t vat7_RENDER_TYPE_PIXEL	= 2u;
-static const uint8_t vat7_RENDER_TYPE_LINE	= 3u;
+static const uint8_t vat7_RENDER_TYPE_PIXEL	 = 2u;
+static const uint8_t vat7_RENDER_TYPE_LINE	 = 3u;
 static const uint8_t vat7_RENDER_TYPE_RECT       = 4u;
+
+
+void vat7_render (vat7_RenderTarget, vat7_RenderCommandBuffer *);
+
 
 #endif  // header guard
